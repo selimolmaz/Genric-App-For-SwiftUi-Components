@@ -9,6 +9,13 @@ import Foundation
 import SwiftUI
 
 struct Page3: View {
+    // cards
+    @State var playerCard: String = "card12"
+    @State var cpuCard: String = "card10"
+    
+    // scores
+    @State var playerScore: Int = 0
+    @State var cpuScore: Int = 0
     
     var body: some View {
         ZStack{
@@ -23,15 +30,21 @@ struct Page3: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Image("card4")
+                    Image(playerCard)
                     Spacer()
-                    Image("card5")
+                    Image(cpuCard)
                     Spacer()
                 }
                 Spacer()
                 
                 //button
-                Image("dealbutton")
+                Button {
+                    deal()
+                } label: {
+                    Image("dealbutton")
+                }
+                
+
                 
                 Spacer()
                 //player scorres
@@ -42,7 +55,7 @@ struct Page3: View {
                         //name
                         Text("Player").font(.headline).padding(.bottom, 10.0)
                         //score
-                        Text("0").font(.largeTitle)
+                        Text("\(playerScore)").font(.largeTitle)
                     }
                     Spacer()
                     //player 2
@@ -50,7 +63,7 @@ struct Page3: View {
                         //name
                         Text("Cpu").font(.headline).padding(.bottom, 10.0)
                         //score
-                        Text("0").font(.largeTitle)
+                        Text("\(cpuScore)").font(.largeTitle)
                     }
                     Spacer()
                     
@@ -58,6 +71,25 @@ struct Page3: View {
                 
                 Spacer()
             }
+            
+        }
+    }
+    func deal(){
+        // randomize the players card
+        var playerCardValue = Int.random(in: 2...14)
+        playerCard = "card" + String(playerCardValue)
+        
+        // randomize the cpu card
+        var cpuCardValue = Int.random(in: 2...14)
+        cpuCard = "card" + String(cpuCardValue)
+        
+        // update scores
+        if playerCardValue > cpuCardValue {
+            playerScore += 1
+        }else if playerCardValue < cpuCardValue {
+            cpuScore += 1
+        } else {
+            print("DRAW!")
         }
     }
 }
